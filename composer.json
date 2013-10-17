@@ -1,0 +1,9 @@
+{
+    "require": {
+        "educoder/pest": "1.0.0-RC1"
+    },
+
+    "require-dev": {
+        "hafriedlander/phockito" : "dev-master"
+    }    
+}

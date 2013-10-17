@@ -1,0 +1,106 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "c0a638b6021b7e064eb50784e91debc3",
+    "packages": [
+        {
+            "name": "educoder/pest",
+            "version": "1.0.0-RC1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/educoder/pest.git",
+                "reference": "d252fffc2d62da89dc5dcce43b94d0bc674f743b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/educoder/pest/zipball/d252fffc2d62da89dc5dcce43b94d0bc674f743b",
+                "reference": "d252fffc2d62da89dc5dcce43b94d0bc674f743b",
+                "shasum": ""
+            },
+            "require": {
+                "lib-curl": "*",
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Zukowski",
+                    "email": "matt@zukowski.ca"
+                },
+                {
+                    "name": "Donald Sipe",
+                    "email": "donald.sipe@gmail.com"
+                }
+            ],
+            "description": "A proper REST client for PHP.",
+            "homepage": "https://github.com/educoder/pest",
+            "time": "2013-06-08 13:30:11"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "hafriedlander/phockito",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hafriedlander/phockito.git",
+                "reference": "548d1da8eebbf80a2c1b22d22cd78efae76dac2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hafriedlander/phockito/zipball/548d1da8eebbf80a2c1b22d22cd78efae76dac2c",
+                "reference": "548d1da8eebbf80a2c1b22d22cd78efae76dac2c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "."
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Hamish Friedlander",
+                    "email": "hamish@silverstripe.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Mocking framework inspired by Mockito for Java",
+            "keywords": [
+                "mockito",
+                "mocks",
+                "testing"
+            ],
+            "time": "2013-08-15 23:44:47"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "educoder/pest": 5,
+        "hafriedlander/phockito": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
