@@ -36,7 +36,7 @@ class Client
 
 	/**
 	 * @param $url
-	 * @return \stdClass
+	 * @return array
 	 */
 	public function UrlSearch($url)
 	{
