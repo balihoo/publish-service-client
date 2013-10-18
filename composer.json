@@ -1,9 +1,17 @@
 {
     "require": {
-        "educoder/pest": "1.0.0-RC1"
+        "guzzle/guzzle": "~3.7"
     },
 
     "require-dev": {
-        "hafriedlander/phockito" : "dev-master"
-    }    
+		"balihoo/phockito-unit": "1.0.0",
+		"hafriedlander/phockito": "dev-master"
+    },
+	"autoload": {
+		"psr-0": {
+			"PublishServiceClient\\": "src/",
+			"Tests": "tests/"
+		}
+	}
+
 }
