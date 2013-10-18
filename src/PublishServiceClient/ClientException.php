@@ -1,7 +1,8 @@
 <?php
+namespace PublishServiceClient;
 use \Guzzle\Http\Message\Response;
 
-class ClientException extends Exception
+class ClientException extends \Exception
 {
 	/**
 	 * @param Response $response

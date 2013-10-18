@@ -46,16 +46,16 @@ class Client
 	/**
 	 * @param string $url
 	 * @return Http\Message\Response
-	 * @throws \ClientException
+	 * @throws ClientException
 	 */
-	private function get($url)
+	public function get($url)
 	{
 		$request = $this->httpClient->get($url);
 		$response = $request->send();
 
-		if ($response->getStatusCode() > 400)
+		if ($response->getStatusCode() >= 400)
 		{
-			throw new \ClientException($response);
+			throw new ClientException($response);
 		}
 
 		return $response->json();
