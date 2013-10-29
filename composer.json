@@ -1,4 +1,15 @@
 {
+	"name": "balihoo/publish-service-client",
+	"type": "library",
+	"description": "PHP client for the Microsite Publish Service",
+	"keywords": [ "rest", "microsite", "client", "library" ],
+	"authors": [
+		{
+			"name": "Balihoo, Inc.",
+			"email": "github@balihoo.com"
+		}
+	],
+	"minimum-stability": "stable",
     "require": {
         "guzzle/guzzle": "~3.7"
     },
