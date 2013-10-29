@@ -15,5 +15,13 @@
 		<testsuite name="PublishServiceClient unit tests">
 			<directory>./tests/UnitTests</directory>
 		</testsuite>
+		<testsuite name="PublishServiceClient integration tests">
+			<directory>./tests/IntegrationTests</directory>
+		</testsuite>
 	</testsuites>
+	<php>
+		<var name="endpoint" value="http://localhost:3000"/>
+		<var name="username" value="devadmin"/>
+		<var name="password" value="topsecret"/>
+	</php>
 </phpunit>

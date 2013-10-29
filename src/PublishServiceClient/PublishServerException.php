@@ -2,7 +2,7 @@
 namespace PublishServiceClient;
 use \Guzzle\Http\Message\Response;
 
-class ClientException extends \Exception
+class PublishServerException extends \Exception
 {
 	/**
 	 * @param Response $response
