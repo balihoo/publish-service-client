@@ -21,10 +21,32 @@ class ClientTest extends PhockitoUnitTestCase
 	/** @var String */
 	protected $version = "1.0.1";
 
+	/** @var array */
+	protected $testDescription;
+
 	public function setUp()
 	{
 		parent::setUp();
 		$this->client = Phockito::spy('PublishServiceClient\Client', "http://me.io", "user", "pass", $this->version);
+
+		$this->testDescription = array(
+			"name" => "test app",
+			"apiVersion" => "1.0.1",
+			"description" => "this is a test",
+			"operations" => array(
+				"TestOperation" => array(
+					"httpMethod" => "PUT",
+					"uri" => "/brand/{BrandKey}",
+					"summary" => "Create a brand",
+					"parameters" => array(
+						"BrandKey" => array(
+							"location" => "uri",
+							"required" => true
+						)
+					)
+				)
+			)
+		);
 	}
 
 	/**
@@ -80,67 +102,46 @@ class ClientTest extends PhockitoUnitTestCase
 	 */
 	public function testGetServiceDescriptionReturnsServiceDescription()
 	{
-		$testDescription = array(
-			"name" => "test app",
-			"apiVersion" => "1.0.1",
-			"description" => "this is a test",
-			"operations" => array(
-				"TestOperation" => array(
-					"httpMethod" => "PUT",
-					"uri" => "/brand/{BrandKey}",
-					"summary" => "Create a brand",
-					"parameters" => array(
-						"BrandKey" => array(
-							"location" => "uri",
-							"required" => true
-						)
-					)
-				)
-			)
-		);
-
 		Phockito::when($this->mockResponse->getStatusCode())->return(200);
-		Phockito::when($this->mockResponse->json())->return($testDescription);
+		Phockito::when($this->mockResponse->json())->return($this->testDescription);
 		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
 		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
 
 		$serviceDescription = $this->client->getServiceDescription();
-		$this->assertEquals(ServiceDescription::factory($testDescription), $serviceDescription);
+		$this->assertEquals(ServiceDescription::factory($this->testDescription), $serviceDescription);
 	}
 
 	/**
-	 * Executing other operations sets the service description
+	 * Executing service description defined operations sets the service description
 	 * @group unit
 	 */
-	public function testOtherOperationsSetServiceDescription()
+	public function testMagicOperationsSetServiceDescription()
 	{
-		$testDescription = array(
-			"name" => "test app",
-			"apiVersion" => "1.0.1",
-			"description" => "this is a test",
-			"operations" => array(
-				"TestOperation" => array(
-					"httpMethod" => "PUT",
-					"uri" => "/brand/{BrandKey}",
-					"summary" => "Create a brand",
-					"parameters" => array(
-						"BrandKey" => array(
-							"location" => "uri",
-							"required" => true
-						)
-					)
-				)
-			)
-		);
-
 		Phockito::when($this->mockResponse->getStatusCode())->return(200);
-		Phockito::when($this->mockResponse->json())->return($testDescription);
+		Phockito::when($this->mockResponse->json())->return($this->testDescription);
 		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
 		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
 		Phockito::when($this->client)->callParent(anything(), anything())->return(null);
 		$this->assertEquals(null, $this->client->getDescription());
 		$this->client->SomeOperation(array());
-		$this->assertEquals(ServiceDescription::factory($testDescription), $this->client->getDescription());
+		$this->assertEquals(ServiceDescription::factory($this->testDescription), $this->client->getDescription());
+	}
+
+	/**
+	 * Executing service description defined operations returns the result
+	 * @group unit
+	 */
+	public function testMagicOperationsReturnResult()
+	{
+		$responseData = array("this" => "that");
+
+		Phockito::when($this->mockResponse->getStatusCode())->return(200);
+		Phockito::when($this->mockResponse->json())->return($this->testDescription);
+		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
+		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
+		Phockito::when($this->client)->callParent(anything(), anything())->return($responseData);
+		$result = $this->client->SomeOperation(array());
+		$this->assertEquals($result, $responseData);
 	}
 }
 ?>

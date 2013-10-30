@@ -75,7 +75,7 @@ class Client extends Service\Client
 			$serviceDescription = $this->getServiceDescription();
 			$this->setDescription($serviceDescription);
 		}
-		$this->callParent($method, $args);
+		return $this->callParent($method, $args);
 	}
 
 	/**
