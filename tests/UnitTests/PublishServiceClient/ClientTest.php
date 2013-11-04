@@ -1,6 +1,7 @@
 <?php
 namespace Tests\UnitTests\PublishServiceClient;
 use PublishServiceClient;
+use PublishServiceClient\Config;
 use Guzzle\Http;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Description\ServiceDescription;
@@ -18,6 +19,9 @@ class ClientTest extends PhockitoUnitTestCase
 	/** @var PublishServiceClient\Client */
 	protected $client;
 
+	/** @var PublishServiceClient\Config */
+	protected $config;
+
 	/** @var String */
 	protected $version = "1.0.1";
 
@@ -27,7 +31,13 @@ class ClientTest extends PhockitoUnitTestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->client = Phockito::spy('PublishServiceClient\Client', "http://me.io", "user", "pass", $this->version);
+		$this->config = new Config(array(
+			'endpoint'=>'http://me.io',
+			'username'=>'user',
+			'password'=>'pass',
+			'version'=>$this->version));
+
+		$this->client = Phockito::spy('PublishServiceClient\Client', $this->config);
 
 		$this->testDescription = array(
 			"name" => "test app",
@@ -68,7 +78,7 @@ class ClientTest extends PhockitoUnitTestCase
 			{
 				$this->client->getServiceDescription();
 				$this->fail("Expected PublishServerException");
-			} catch(PublishServiceClient\PublishServerException $ex) {
+			} catch(PublishServiceClient\Exception\PublishServerException $ex) {
 				$this->assertEquals("Server error occurred. Error code: " . $errorCode . " Response: " . $errorMessage, $ex->getMessage());
 				Phockito::reset($this->mockResponse, 'getStatusCode');
 			}
@@ -91,7 +101,7 @@ class ClientTest extends PhockitoUnitTestCase
 			$this->client->getServiceDescription();
 			$this->fail("Expected InvalidApiVersionException");
 		}
-		catch(PublishServiceClient\InvalidApiVersionException $ex) {
+		catch(PublishServiceClient\Exception\InvalidApiVersionException $ex) {
 			$this->assertEquals("The service does not have a service description for the requested API version: " . $this->version, $ex->getMessage());
 		}
 	}

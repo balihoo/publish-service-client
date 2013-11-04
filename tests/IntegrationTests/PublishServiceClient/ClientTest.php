@@ -1,6 +1,7 @@
 <?php
 namespace Tests\IntegrationTests\PublishServiceClient;
 use PublishServiceClient\Client;
+use PublishServiceClient\Config;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +16,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 	public function testGetServiceDescriptionExplicitVersion()
 	{
 		$version = "1.0.1";
-		$this->client = new Client($GLOBALS['endpoint'], $GLOBALS['username'], $GLOBALS['password'], $version);
+		$config = new Config(array(
+			'endpoint' => $GLOBALS['endpoint'],
+			'username' => $GLOBALS['adminUsername'],
+			'password' => $GLOBALS['adminPassword'],
+			'version' => $version));
+		$this->client = new Client($config);
 
 		$serviceDescription = $this->client->getServiceDescription();
 		$this->assertEquals($serviceDescription->getApiVersion(), $version);
@@ -29,11 +35,34 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetServiceDescriptionImplicitLatestVersion()
 	{
-		$this->client = new Client($GLOBALS['endpoint'], $GLOBALS['username'], $GLOBALS['password']);
+		$config = new Config(array(
+			'endpoint' => $GLOBALS['endpoint'],
+			'username' => $GLOBALS['adminUsername'],
+			'password' => $GLOBALS['adminPassword']));
 
+		$this->client = new Client($config);
 		$serviceDescription = $this->client->getServiceDescription();
 		$this->assertNotEquals($serviceDescription->getApiVersion(), null);
 		$this->assertTrue(count($serviceDescription->getOperations()) > 0);
+	}
+
+	public function testCreateTemplateVersion()
+	{
+		$config = new Config(array(
+			'endpoint' => $GLOBALS['endpoint'],
+			'username' => $GLOBALS['username'],
+			'password' => $GLOBALS['password']));
+
+		$this->client = new Client($config);
+
+		$filename = "/home/jflitton/test.zip";
+		$filePointer = fopen($filename, 'r');
+		$templateCode = fread($filePointer, filesize($filename));
+        $templateCode = base64_encode($templateCode);
+
+		$templateVersion = $this->client->createTemplateversion(array("BrandKey" => "testbrand1", "TemplateID" => 1, "TemplateCode" => $templateCode, "Publish" => true));
+		$this->assertTrue(isset($templateVersion['TemplateVersionID']));
+		$this->assertNotEquals($templateVersion['TemplateVersionID'], null);
 	}
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-namespace PublishServiceClient;
+namespace PublishServiceClient\Exception;
 use \Guzzle\Http\Message\Response;
 
 class InvalidApiVersionException extends \Exception

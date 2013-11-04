@@ -21,7 +21,9 @@
 	</testsuites>
 	<php>
 		<var name="endpoint" value="http://localhost:3000"/>
-		<var name="username" value="devadmin"/>
+		<var name="username" value="devuser"/>
 		<var name="password" value="topsecret"/>
+		<var name="adminUsername" value="devadmin"/>
+		<var name="adminPassword" value="topsecret"/>
 	</php>
 </phpunit>

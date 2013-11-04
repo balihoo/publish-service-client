@@ -3,6 +3,8 @@ namespace PublishServiceClient;
 use Guzzle\Service;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Description\ServiceDescription;
+use PublishServiceClient\Exception\PublishServerException;
+use PublishServiceClient\Exception\InvalidApiVersionException;
 
 /**
  * Class PublishServiceClient
@@ -14,19 +16,13 @@ class Client extends Service\Client
 	/** @var String $version */
 	protected $version = 'latest';
 
-	public function __construct($baseUrl, $username, $password, $version = null)
+	public function __construct(Config $config)
 	{
-		$config = Collection::fromConfig(array("base_url" => $baseUrl, "username" => $username, "password" => $password));
-		parent::__construct($baseUrl, $config);
-
-		// Set the version (if specified)
-		if ($version)
-		{
-			$this->version = $version;
-		}
+		parent::__construct($config->getEndpoint(), $config->getGuzzleConfig());
+		$this->version = $config->getVersion();
 
 		// Set up basic auth
-		$this->setDefaultOption('auth', array($username, $password));
+		$this->setDefaultOption('auth', array($config->getUsername(), $config->getPassword()));
 	}
 
 	/**
