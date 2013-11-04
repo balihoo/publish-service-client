@@ -46,6 +46,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue(count($serviceDescription->getOperations()) > 0);
 	}
 
+	/**
+	 * Verify that one of the dynamically generated commands works
+	 * @group integration
+	 */
 	public function testCreateTemplateVersion()
 	{
 		$config = new Config(array(
