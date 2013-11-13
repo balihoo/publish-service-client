@@ -122,6 +122,62 @@ class ClientTest extends PhockitoUnitTestCase
 	}
 
 	/**
+	 * If the server returns an error 400 or above ping throws a PublishServerException
+	 * @group unit
+	 */
+	public function testPingThrowsClientException()
+	{
+		$errorMessage = "some error";
+		Phockito::when($this->mockResponse->getMessage())->return($errorMessage);
+		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
+		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
+
+		for($errorCode = 400; $errorCode < 506; $errorCode++)
+		{
+			Phockito::when($this->mockResponse->getStatusCode())->return($errorCode);
+
+			try
+			{
+				$this->client->ping();
+				$this->fail("Expected PublishServerException");
+			} catch(PublishServiceClient\Exception\PublishServerException $ex) {
+				$this->assertEquals("Server error occurred. Error code: " . $errorCode . " Response: " . $errorMessage, $ex->getMessage());
+				Phockito::reset($this->mockResponse, 'getStatusCode');
+			}
+		}
+	}
+
+	/**
+	 * Ping returns true when the publish service responds with status: success
+	 * @group unit
+	 */
+	public function testPingSuccess()
+	{
+		$pingResponse = array("status" => "success");
+		Phockito::when($this->mockResponse->getStatusCode())->return(200);
+		Phockito::when($this->mockResponse->json())->return($pingResponse);
+		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
+		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
+
+		$this->assertTrue($this->client->ping());
+	}
+
+	/**
+	 * Ping returns false when the publish service responds with an error
+	 * @group unit
+	 */
+	public function testPingFail()
+	{
+		$pingResponse = array("weirdresponse" => "failed");
+		Phockito::when($this->mockResponse->getStatusCode())->return(200);
+		Phockito::when($this->mockResponse->json())->return($pingResponse);
+		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
+		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
+
+		$this->assertFalse($this->client->ping());
+	}
+
+	/**
 	 * Executing service description defined operations sets the service description
 	 * @group unit
 	 */

@@ -9,8 +9,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 	protected $client;
 
 	/**
-	 * Verify that the only concrete command our client implements successfully gets the service definition
-	 * when an API version is supplied
+	 * Gets the service definition when an API version is supplied
 	 * @group integration
 	 */
 	public function testGetServiceDescriptionExplicitVersion()
@@ -29,8 +28,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Verify that the only concrete command our client implements successfully gets the latest service definition
-	 * when an API version is not supplied
+	 * Gets the latest service definition when an API version is not supplied
 	 * @group integration
 	 */
 	public function testGetServiceDescriptionImplicitLatestVersion()
@@ -47,26 +45,20 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Verify that one of the dynamically generated commands works
+	 * Gets the service definition when an API version is supplied
 	 * @group integration
 	 */
-	public function testCreateTemplateVersion()
+	public function testPing()
 	{
+		$version = "1.0.1";
 		$config = new Config(array(
 			'endpoint' => $GLOBALS['endpoint'],
-			'username' => $GLOBALS['username'],
-			'password' => $GLOBALS['password']));
-
+			'username' => $GLOBALS['adminUsername'],
+			'password' => $GLOBALS['adminPassword'],
+			'version' => $version));
 		$this->client = new Client($config);
 
-		$filename = "/home/jflitton/test.zip";
-		$filePointer = fopen($filename, 'r');
-		$templateCode = fread($filePointer, filesize($filename));
-        $templateCode = base64_encode($templateCode);
-
-		$templateVersion = $this->client->createTemplateversion(array("BrandKey" => "testbrand1", "TemplateID" => 1, "TemplateCode" => $templateCode, "Publish" => true));
-		$this->assertTrue(isset($templateVersion['TemplateVersionID']));
-		$this->assertNotEquals($templateVersion['TemplateVersionID'], null);
+		$this->assertTrue($this->client->ping());
 	}
 }
 ?>

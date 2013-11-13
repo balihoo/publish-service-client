@@ -26,8 +26,7 @@ class Client extends Service\Client
 	}
 
 	/**
-	 * This is the only concrete command that the client implements.
-	 * It gets the service description from the publish service.
+	 * Gets the service description from the publish service.
 	 *
 	 * @return ServiceDescription
 	 * @throws InvalidApiVersionException
@@ -52,6 +51,27 @@ class Client extends Service\Client
 
 		// There wasn't a description for the requested version
 		throw new InvalidApiVersionException($this->version);
+	}
+
+	/**
+	 * Pings the publish service.
+	 *
+	 * @return ServiceDescription
+	 * @throws InvalidApiVersionException
+	 * @throws PublishServerException
+	 */
+	public function ping()
+	{
+		$request = $this->get('/ping');
+		$response = $request->send();
+
+		if ($response->getStatusCode() >= 400)
+		{
+			throw new PublishServerException($response);
+		}
+
+		$pingResponse = $response->json();
+		return ($pingResponse && isset($pingResponse['status']) && $pingResponse['status'] == 'success');
 	}
 
 	/**
