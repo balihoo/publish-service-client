@@ -64,24 +64,22 @@ class ConfigTest extends PhockitoUnitTestCase
 		$endpoint = 'http://test.endpoint';
 		$username = 'user';
 		$password = 'pass';
-		$version = '1.0.1';
+
 		$configSection = 'publishClient';
 
 		$config = new Config(array(
 			'endpoint' => 'bad'.$endpoint,
 			'username' => 'bad'.$username,
 			'password' => 'bad'.$password,
-			'version' => 'bad'.$version,
+
 			$configSection => array(
 				'endpoint' => $endpoint,
 				'username' => $username,
-				'password' => $password,
-				'version' => $version)), $configSection);
+				'password' => $password)), $configSection);
 
 		$this->assertEquals($config->getEndpoint(), $endpoint);
 		$this->assertEquals($config->getUsername(), $username);
 		$this->assertEquals($config->getPassword(), $password);
-		$this->assertEquals($config->getVersion(), $version);
 	}
 
 	/**
@@ -116,13 +114,11 @@ class ConfigTest extends PhockitoUnitTestCase
 		$config = new Config(array(
 			'endpoint' => $endpoint,
 			'username' => $username,
-			'password' => $password,
-			'version' => $version));
+			'password' => $password));
 
 		$this->assertEquals($config->getEndpoint(), $endpoint);
 		$this->assertEquals($config->getUsername(), $username);
 		$this->assertEquals($config->getPassword(), $password);
-		$this->assertEquals($config->getVersion(), $version);
 	}
 
 	/**
@@ -144,7 +140,7 @@ class ConfigTest extends PhockitoUnitTestCase
 		$this->assertEquals($config->getEndpoint(), $endpoint);
 		$this->assertEquals($config->getUsername(), $username);
 		$this->assertEquals($config->getPassword(), $password);
-		$this->assertEquals($config->getVersion(), "latest");
+
 	}
 
 	/**
@@ -166,7 +162,6 @@ class ConfigTest extends PhockitoUnitTestCase
 		$this->assertEquals($config->getEndpoint(), $endpoint);
 		$this->assertEquals($config->getUsername(), $username);
 		$this->assertEquals($config->getPassword(), $password);
-		$this->assertEquals($config->getVersion(), "latest");
 	}
 }
 ?>

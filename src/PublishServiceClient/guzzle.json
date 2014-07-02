@@ -1,0 +1,774 @@
+	{
+		"name": "micrositePublishService",
+		"apiVersion": "1.0.6",
+		"created": "2013-11-20T16:07:16.912Z",
+		"description": "A quasi-RESTful API for CRUD operations on Microsite data and templates",
+		"operations": {
+			"CreateBrand": {
+				"httpMethod": "PUT",
+				"uri": "/brand/{BrandKey}",
+				"summary": "Create a brand",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": true
+			},
+			"GetBrand": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}",
+				"summary": "Get a brand",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": true
+			},
+			"GetGuzzles": {
+				"httpMethod": "GET",
+				"uri": "/guzzle",
+				"summary": "Get guzzles",
+				"parameters": {},
+				"requiresAdmin": false
+			},
+			"GetGuzzle": {
+				"httpMethod": "GET",
+				"uri": "/guzzle/{Version}",
+				"summary": "Get a guzzle",
+				"parameters": {
+					"Version": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"CreateDomain": {
+				"httpMethod": "PUT",
+				"uri": "/brand/{BrandKey}/domain/{Domain}",
+				"summary": "Create a domain",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"Domain": {
+						"location": "uri",
+						"required": true
+					},
+					"RedirectUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"RedirectCode": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"GoogleAnalyticsCode": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetDomain": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/domain/{Domain}",
+				"summary": "Get a domain",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"Domain": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"SearchDomain": {
+				"httpMethod": "GET",
+				"uri": "/domain/{Domain}",
+				"summary": "Get a domain",
+				"parameters": {
+					"Domain": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"UpsertDomain": {
+				"httpMethod": "PATCH",
+				"uri": "/brand/{BrandKey}/domain/{Domain}",
+				"summary": "Updates an existing domain, or creates it if it doesn't exist",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"Domain": {
+						"location": "uri",
+						"required": true
+					},
+					"RedirectUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"RedirectCode": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"GoogleAnalyticsCode": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": false
+			},
+			"DeleteDomain": {
+				"httpMethod": "DELETE",
+				"uri": "/brand/{BrandKey}/domain/{Domain}",
+				"summary": "Delete a domain",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"Domain": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"CreateMicrosite": {
+				"httpMethod": "POST",
+				"uri": "/brand/{BrandKey}/microsite",
+				"summary": "Create a microsite",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"type": "integer",
+						"location": "json",
+						"required": true
+					},
+					"DataVersion": {
+						"type": "object",
+						"location": "json",
+						"required": true,
+						"properties": {
+							"Publish": {
+								"type": "boolean",
+								"location": "json",
+								"required": true
+							}
+						}
+					},
+					"Urls": {
+						"type": "array",
+						"location": "json",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"UpdateMicrosite": {
+				"httpMethod": "PATCH",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}",
+				"summary": "Update a microsite",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"type": "integer",
+						"location": "json",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetMicrosite": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}",
+				"summary": "Get a microsite",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetMicrosites": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/microsite",
+				"summary": "Get microsites",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"DeleteMicrosite": {
+				"httpMethod": "DELETE",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}",
+				"summary": "Delete a microsite",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"CreateDataversion": {
+				"httpMethod": "POST",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/dataversion",
+				"summary": "Create a dataversion",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"DataVersion": {
+						"type": "object",
+						"location": "json",
+						"required": true,
+						"properties": {
+							"Publish": {
+								"type": "boolean",
+								"location": "json",
+								"required": true
+							}
+						}
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetDataversions": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/dataversion",
+				"summary": "Get dataversions",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetDataversion": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/dataversion/{DataVersionID}",
+				"summary": "Get a dataversion",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"DataVersionID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"UpdateDataversion": {
+				"httpMethod": "PATCH",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/dataversion/{DataVersionID}",
+				"summary": "Update a dataversion",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"DataVersionID": {
+						"location": "uri",
+						"required": true
+					},
+					"Publish": {
+						"type": "boolean",
+						"location": "json",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetSearch": {
+				"httpMethod": "GET",
+				"uri": "/search/{Url}",
+				"summary": "Get a search",
+				"parameters": {
+					"Url": {
+						"location": "uri",
+						"required": true
+					},
+					"TestMode": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetTemplates": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/template",
+				"summary": "Get templates",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"type": "integer",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetTemplate": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/template/{TemplateID}",
+				"summary": "Get a template",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetTemplateversions": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/template/{TemplateID}/templateversion",
+				"summary": "Get templateversions",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetTemplateversion": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/template/{TemplateID}/templateversion/{TemplateVersionID}",
+				"summary": "Get a templateversion",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateVersionID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"CreateTemplate": {
+				"httpMethod": "POST",
+				"uri": "/brand/{BrandKey}/template",
+				"summary": "Create a template",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"Description": {
+						"type": "string",
+						"location": "json",
+						"required": true
+					},
+					"TemplateVersion": {
+						"type": "object",
+						"location": "json",
+						"required": true,
+						"properties": {
+							"TemplateCode": {
+								"type": "string",
+								"location": "json",
+								"required": true
+							},
+							"Publish": {
+								"type": "boolean",
+								"location": "json",
+								"required": true
+							}
+						}
+					}
+				},
+				"requiresAdmin": false
+			},
+			"CreateTemplateversion": {
+				"httpMethod": "POST",
+				"uri": "/brand/{BrandKey}/template/{TemplateID}/templateversion",
+				"summary": "Create a templateversion",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateCode": {
+						"type": "string",
+						"location": "json",
+						"required": true
+					},
+					"Publish": {
+						"type": "boolean",
+						"location": "json",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"UpdateTemplateversion": {
+				"httpMethod": "PATCH",
+				"uri": "/brand/{BrandKey}/template/{TemplateID}/templateversion/{TemplateVersionID}",
+				"summary": "Update a templateversion",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateID": {
+						"location": "uri",
+						"required": true
+					},
+					"TemplateVersionID": {
+						"location": "uri",
+						"required": true
+					},
+					"Publish": {
+						"type": "boolean",
+						"location": "json",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"CreateUrl": {
+				"httpMethod": "POST",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/url",
+				"summary": "Create a url",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"Url": {
+						"type": "string",
+						"location": "json",
+						"required": true
+					},
+					"RedirectUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"RedirectCode": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"CanonicalUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"ErrorUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetUrl": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/url/{UrlID}",
+				"summary": "Get a url",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"UrlID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetUrls": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/url",
+				"summary": "Get urls",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"UpdateUrl": {
+				"httpMethod": "PATCH",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/url/{UrlID}",
+				"summary": "Update a url",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"UrlID": {
+						"location": "uri",
+						"required": true
+					},
+					"Url": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"RedirectUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"RedirectCode": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"CanonicalUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"ErrorUrl": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": false
+			},
+			"DeleteUrl": {
+				"httpMethod": "DELETE",
+				"uri": "/brand/{BrandKey}/microsite/{MicrositeID}/url/{UrlID}",
+				"summary": "Delete a url",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					},
+					"UrlID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetUser": {
+				"httpMethod": "GET",
+				"uri": "/user/{Username}",
+				"summary": "Get a user",
+				"parameters": {
+					"Username": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": true
+			},
+			"CreateUser": {
+				"httpMethod": "PUT",
+				"uri": "/user/{Username}",
+				"summary": "Create a user",
+				"parameters": {
+					"Username": {
+						"location": "uri",
+						"required": true
+					},
+					"Password": {
+						"type": "string",
+						"location": "json",
+						"required": true
+					},
+					"Enabled": {
+						"type": "boolean",
+						"location": "json",
+						"required": false
+					},
+					"IsAdmin": {
+						"type": "boolean",
+						"location": "json",
+						"required": false
+					},
+					"CanSearch": {
+						"type": "boolean",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": true
+			},
+			"UpdateUser": {
+				"httpMethod": "PATCH",
+				"uri": "/user/{Username}",
+				"summary": "Update a user",
+				"parameters": {
+					"Username": {
+						"location": "uri",
+						"required": true
+					},
+					"Password": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
+					"Enabled": {
+						"type": "boolean",
+						"location": "json",
+						"required": false
+					},
+					"IsAdmin": {
+						"type": "boolean",
+						"location": "json",
+						"required": false
+					},
+					"CanSearch": {
+						"type": "boolean",
+						"location": "json",
+						"required": false
+					}
+				},
+				"requiresAdmin": true
+			},
+			"DeleteUser": {
+				"httpMethod": "DELETE",
+				"uri": "/user/{Username}",
+				"summary": "Delete a user",
+				"parameters": {
+					"Username": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": true
+			},
+			"DeleteBrand": {
+				"httpMethod": "DELETE",
+				"uri": "/user/{Username}/brand/{BrandKey}",
+				"summary": "Delete a brand",
+				"parameters": {
+					"Username": {
+						"location": "uri",
+						"required": true
+					},
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": true
+			},
+			"GetSitemapUrls": {
+				"httpMethod": "GET",
+				"uri": "/sitemap/{Domain}",
+				"summary": "Get a list of URLs for the provided domain",
+				"parameters": {
+					"Domain": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			}
+		}
+	}

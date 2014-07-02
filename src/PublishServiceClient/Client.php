@@ -14,12 +14,10 @@ use PublishServiceClient\Exception\InvalidApiVersionException;
 class Client extends Service\Client
 {
 	/** @var String $version */
-	protected $version = 'latest';
 
 	public function __construct(Config $config)
 	{
 		parent::__construct($config->getEndpoint(), $config->getGuzzleConfig());
-		$this->version = $config->getVersion();
 
 		// Set up basic auth
 		$this->setDefaultOption('auth', array($config->getUsername(), $config->getPassword()));
@@ -29,28 +27,25 @@ class Client extends Service\Client
 	 * Gets the service description from the publish service.
 	 *
 	 * @return ServiceDescription
-	 * @throws InvalidApiVersionException
-	 * @throws PublishServerException
 	 */
+
+	public function getFileContents()
+	{
+		$fileContents = file_get_contents(dirname(__FILE__) . "/guzzle.json", "r");
+		//$description = json_decode($fileContents, true);
+		return $fileContents;
+	}
+
+
 	public function getServiceDescription()
 	{
-		$request = $this->get('/guzzle/' . $this->version);
-		$response = $request->send();
-
-		if ($response->getStatusCode() >= 400)
-		{
-			throw new PublishServerException($response);
-		}
-
-		$description = $response->json();
+		$description = json_decode($this->getFileContents(), true);
 
 		if ($description && isset($description['apiVersion']))
 		{
 			return ServiceDescription::factory($description);
 		}
-
-		// There wasn't a description for the requested version
-		throw new InvalidApiVersionException($this->version);
+		return null;
 	}
 
 	/**

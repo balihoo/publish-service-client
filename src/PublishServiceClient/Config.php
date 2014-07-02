@@ -17,8 +17,6 @@ class Config
 	/** @var string */
 	private $password;
 
-	/** @var string */
-	private $version;
 
 	/**
 	 * @param array $config
@@ -29,7 +27,6 @@ class Config
 		$this->endpoint = $this->getConfigurationItem($config, $configSection, "endpoint");
 		$this->username = $this->getConfigurationItem($config, $configSection, "username");
 		$this->password = $this->getConfigurationItem($config, $configSection, "password");
-		$this->version = $this->getConfigurationItem($config, $configSection, "version", "latest");
 
 		$this->guzzleConfig = Collection::fromConfig(array(
 			"base_url" => $this->endpoint,
@@ -99,8 +96,4 @@ class Config
 		return $this->endpoint;
 	}
 
-	public function getVersion()
-	{
-		return $this->version;
-	}
 }

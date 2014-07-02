@@ -23,7 +23,7 @@ class ClientTest extends PhockitoUnitTestCase
 	protected $config;
 
 	/** @var String */
-	protected $version = "1.0.1";
+	protected $version = "1.0.6";
 
 	/** @var array */
 	protected $testDescription;
@@ -41,7 +41,7 @@ class ClientTest extends PhockitoUnitTestCase
 
 		$this->testDescription = array(
 			"name" => "test app",
-			"apiVersion" => "1.0.1",
+			"apiVersion" => "1.0.6",
 			"description" => "this is a test",
 			"operations" => array(
 				"TestOperation" => array(
@@ -57,68 +57,6 @@ class ClientTest extends PhockitoUnitTestCase
 				)
 			)
 		);
-	}
-
-	/**
-	 * If the server returns an error 400 or above getServiceDescription throws a PublishServerException
-	 * @group unit
-	 */
-	public function testGetServiceDescriptionThrowsClientException()
-	{
-		$errorMessage = "some error";
-		Phockito::when($this->mockResponse->getMessage())->return($errorMessage);
-		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
-		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
-
-		for($errorCode = 400; $errorCode < 506; $errorCode++)
-		{
-			Phockito::when($this->mockResponse->getStatusCode())->return($errorCode);
-
-			try
-			{
-				$this->client->getServiceDescription();
-				$this->fail("Expected PublishServerException");
-			} catch(PublishServiceClient\Exception\PublishServerException $ex) {
-				$this->assertEquals("Server error occurred. Error code: " . $errorCode . " Response: " . $errorMessage, $ex->getMessage());
-				Phockito::reset($this->mockResponse, 'getStatusCode');
-			}
-		}
-	}
-
-	/**
-	 * If the server returns an empty body getServiceDescription throws an InvalidApiVersionException
-	 * @group unit
-	 */
-	public function testGetServiceDescriptionThrowsInvalidApiVersionException()
-	{
-		Phockito::when($this->mockResponse->getStatusCode())->return(200);
-		Phockito::when($this->mockResponse->json())->return(array());
-		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
-		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
-
-		try
-		{
-			$this->client->getServiceDescription();
-			$this->fail("Expected InvalidApiVersionException");
-		}
-		catch(PublishServiceClient\Exception\InvalidApiVersionException $ex) {
-			$this->assertEquals("The service does not have a service description for the requested API version: " . $this->version, $ex->getMessage());
-		}
-	}
-
-	/**
-	 * getServiceDescription returns a ServiceDescription
-	 * @group unit
-	 */
-	public function testGetServiceDescriptionReturnsServiceDescription()
-	{
-		Phockito::when($this->mockResponse->getStatusCode())->return(200);
-		Phockito::when($this->mockResponse->json())->return($this->testDescription);
-		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
-		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
-
-		$serviceDescription = $this->client->getServiceDescription();
-		$this->assertEquals(ServiceDescription::factory($this->testDescription), $serviceDescription);
 	}
 
 	/**
@@ -183,10 +121,7 @@ class ClientTest extends PhockitoUnitTestCase
 	 */
 	public function testMagicOperationsSetServiceDescription()
 	{
-		Phockito::when($this->mockResponse->getStatusCode())->return(200);
-		Phockito::when($this->mockResponse->json())->return($this->testDescription);
-		Phockito::when($this->mockRequest->send())->return($this->mockResponse);
-		Phockito::when($this->client)->get(anything())->return($this->mockRequest);
+		Phockito::when($this->client->getFileContents())->return(json_encode($this->testDescription));
 		Phockito::when($this->client)->callParent(anything(), anything())->return(null);
 		$this->assertEquals(null, $this->client->getDescription());
 		$this->client->SomeOperation(array());
@@ -208,6 +143,23 @@ class ClientTest extends PhockitoUnitTestCase
 		Phockito::when($this->client)->callParent(anything(), anything())->return($responseData);
 		$result = $this->client->SomeOperation(array());
 		$this->assertEquals($result, $responseData);
+	}
+
+	/**
+	 * Executing service description when it fails
+	 */
+	public function testFailedGetDescription()
+	{
+		Phockito::when($this->client->getFileContents())->return(null);
+		$this->assertEquals($this->client->getServiceDescription(), null);
+	}
+
+	public function testUnsetDescription()
+	{
+		unset($this->testDescription['apiVersion']);
+		Phockito::when($this->client->getFileContents())->return(json_encode($this->testDescription));
+
+		$this->assertEquals($this->client->getServiceDescription(), null);
 	}
 }
 ?>
