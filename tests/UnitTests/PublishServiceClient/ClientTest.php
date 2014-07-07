@@ -151,7 +151,7 @@ class ClientTest extends PhockitoUnitTestCase
 	public function testFailedGetDescription()
 	{
 		Phockito::when($this->client->getFileContents())->return(null);
-		$this->assertEquals($this->client->getServiceDescription(), null);
+		$this->assertEquals(null, $this->client->getServiceDescription());
 	}
 
 	public function testUnsetDescription()
@@ -159,7 +159,7 @@ class ClientTest extends PhockitoUnitTestCase
 		unset($this->testDescription['apiVersion']);
 		Phockito::when($this->client->getFileContents())->return(json_encode($this->testDescription));
 
-		$this->assertEquals($this->client->getServiceDescription(), null);
+		$this->assertEquals(null, $this->client->getServiceDescription());
 	}
 }
 ?>

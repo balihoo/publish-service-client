@@ -13,7 +13,6 @@ use PublishServiceClient\Exception\InvalidApiVersionException;
  */
 class Client extends Service\Client
 {
-	/** @var String $version */
 
 	public function __construct(Config $config)
 	{
