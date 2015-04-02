@@ -189,7 +189,7 @@
 						"location": "json",
 						"required": true
 					},
-					"Tags:": {
+					"Tags": {
 						"type": "object",
 						"location": "json",
 						"required": false
@@ -215,7 +215,7 @@
 						"location": "json",
 						"required": true
 					},
-					"Tags:": {
+					"Tags": {
 						"type": "object",
 						"location": "json",
 						"required": false
@@ -581,7 +581,7 @@
 						"location": "json",
 						"required": false
 					},
-					"Tags:": {
+					"Tags": {
 						"type": "object",
 						"location": "json",
 						"required": false
@@ -689,7 +689,7 @@
 						"location": "json",
 						"required": false
 					},
-					"Tags:": {
+					"Tags": {
 						"type": "object",
 						"location": "json",
 						"required": false
