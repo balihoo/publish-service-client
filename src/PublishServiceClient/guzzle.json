@@ -162,6 +162,11 @@
 						"location": "uri",
 						"required": true
 					},
+					"SiteKey": {
+						"type": "string",
+						"location": "json",
+						"required": false
+					},
 					"TemplateID": {
 						"type": "integer",
 						"location": "json",
@@ -183,6 +188,11 @@
 						"type": "array",
 						"location": "json",
 						"required": true
+					},
+					"Tags:": {
+						"type": "object",
+						"location": "json",
+						"required": "false"
 					}
 				},
 				"requiresAdmin": false
@@ -204,6 +214,11 @@
 						"type": "integer",
 						"location": "json",
 						"required": true
+					},
+					"Tags:": {
+						"type": "object",
+						"location": "json",
+						"required": "false"
 					}
 				},
 				"requiresAdmin": false
@@ -218,6 +233,22 @@
 						"required": true
 					},
 					"MicrositeID": {
+						"location": "uri",
+						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetMicrositeNatural": {
+				"httpMethod": "GET",
+				"uri": "/brand/{BrandKey}/site/{SiteKey}",
+				"summary": "Get a microsite by its natural key",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"SiteKey": {
 						"location": "uri",
 						"required": true
 					}
@@ -549,6 +580,11 @@
 						"type": "string",
 						"location": "json",
 						"required": false
+					},
+					"Tags:": {
+						"type": "object",
+						"location": "json",
+						"required": "false"
 					}
 				},
 				"requiresAdmin": false
@@ -585,6 +621,28 @@
 					"MicrositeID": {
 						"location": "uri",
 						"required": true
+					}
+				},
+				"requiresAdmin": false
+			},
+			"GetUrlsForBrand": {
+				"httpMethod": "POST",
+				"uri": "/brand/{BrandKey}/url",
+				"summary": "Get urls",
+				"parameters": {
+					"BrandKey": {
+						"location": "uri",
+						"required": true
+					},
+					"MicrositeTags": {
+						"type": "object",
+						"location": "json",
+						"required": false
+					},
+					"UrlTags": {
+						"type": "object",
+						"location": "json",
+						"required": false
 					}
 				},
 				"requiresAdmin": false
@@ -630,6 +688,11 @@
 						"type": "string",
 						"location": "json",
 						"required": false
+					},
+					"Tags:": {
+						"type": "object",
+						"location": "json",
+						"required": "false"
 					}
 				},
 				"requiresAdmin": false
