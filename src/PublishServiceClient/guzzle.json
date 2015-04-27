@@ -422,6 +422,22 @@
 				},
 				"requiresAdmin": false
 			},
+                        "GetTemplateNatural": {
+                             "httpMethod": "GET",
+                              "uri": "/brand/{BrandKey}/templatebyKey/{TemplateKey}",
+                               "summary": "Get a template",
+                                "parameters": {
+                           "BrandKey": {
+                              "location": "uri",
+                              "required": true
+                           },
+                            "TemplateKey": {
+                            "location": "uri",
+                            "required": true
+                            }
+                        },
+                        "requiresAdmin": false
+                        },
 			"GetTemplateversions": {
 				"httpMethod": "GET",
 				"uri": "/brand/{BrandKey}/template/{TemplateID}/templateversion",
@@ -472,6 +488,11 @@
 						"location": "json",
 						"required": true
 					},
+                                        "TemplateKey": {
+                                             "type": "string",
+                                            "location": "json",
+                                            "required": false
+                                        },
 					"TemplateVersion": {
 						"type": "object",
 						"location": "json",
